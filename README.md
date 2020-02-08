@@ -4,6 +4,6 @@ Used to allow the scraping of price data of boozebud.com, displaying price diffe
 
 **No longer works due to changes on boozebuds site**
 
-#For when it did work
-##Home Page
+# For when it did work
+## Home Page
 ![Home Page](/screens/home.png)
