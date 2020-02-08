@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+.alluls {
+  background-color: rgb(224,224,224);
+  float: none;
+
+ }
+ .icons {
+ 	background-color: rgb(60,66,69);
+ }
+
+ .divv {
+ 	background-color: rgb(60,66,69);
+ 	display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+ }
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<h1>Search</h1>
+	<input type="text" id="Search" />	
+	     <ul class="alluls" id="searchul">
+<div class=divv>
+{% for key, item in names.items()%}
+
+<li ><a href="{{ url_for('product_details', product_name=key)}}" class='icons'>{{key}} </a></li>
+{% endfor %}
+ </div>
+    	 </ul>
+
+<script type="text/javascript">
+$("#Search").on("keyup input", function () {
+  
+if (this.value.length > 0) {
+  $("#searchul li").hide().filter(function () {
+    return $(this).text().toLowerCase().lastIndexOf($("#Search").val().toLowerCase(),0)==  0;
+  
+    
+  }).show();
+  
+}
+});
+</script>
+{% endblock content%}

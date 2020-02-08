@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+ }
+.grid-element {
+  padding: 10px;
+  color: #fff;
+  border: 1px solid #fff;
+  background-color: rgb(60,66,69);
+}
+</style>
+
+
+<h1>Products Currently On Sale By 50%</h1>
+<div class="grid-container">
+{% for key, item in price_data.items() %}
+	{%if item[0] == 0 %}
+		{% do item.pop(0) %}
+	{% endif %}
+	{% if item|length >= 2 %}
+	{% if item[-1] < item[-2] %}
+	{% if (1-(item[-1]/item[-2])) >= (0.5) %}
+	{% if key in products %}
+	<div class="grid-element"><a href="{{products[key][5]}}" style="text-decoration: none;"><img src="{{products[key][6]}}" style="float:right"><h1 style="color: #fff; font-size: 22px">{{products[key][0]}}: <span style="font-size: 18px"><br>{{products[key][1]}}:</span><span style="font-size: 14px"> {{products[key][3]}}</span><br><span style="font-size: 18px">Was:</span><span style="font-size: 14px"> {{item[-2]}}</span><span style="font-size: 18px">   Now:</span><span style="font-size: 14px"> {{item[-1]}}</span></h1></img></a></div>
+	{% endif %}
+	{% endif %}
+	{% endif %}
+	{% endif %}
+{% endfor %}
+</div>
+
+
+
+<h1>Products Currently On Sale By 40%</h1>
+<div class="grid-container">
+{% for key, item in price_data.items() %}
+	{%if item[0] == 0 %}
+		{% do item.pop(0) %}
+	{% endif %}
+	{% if item|length >= 2 %}
+	{% if item[-1] < item[-2] %}
+	{% if (1-(item[-1]/item[-2])) >= (0.4) and (1-(item[-1]/item[-2])) <= (0.49) %}
+	{% if key in products %}
+	<div class="grid-element"><a href="{{products[key][5]}}" style="text-decoration: none;"><img src="{{products[key][6]}}" style="float:right"><h1 style="color: #fff; font-size: 22px">{{products[key][0]}}: <span style="font-size: 18px"><br>{{products[key][1]}}:</span><span style="font-size: 14px"> {{products[key][3]}}</span><br><span style="font-size: 18px">Was:</span><span style="font-size: 14px"> {{item[-2]}}</span><span style="font-size: 18px">   Now:</span><span style="font-size: 14px"> {{item[-1]}}</span></h1></img></a></div>
+	{% endif %}
+	{% endif %}
+	{% endif %}
+	{% endif %}
+{% endfor %}
+</div>
+
+
+<h1>Products Currently On Sale By 30%</h1>
+<div class="grid-container">
+{% for key, item in price_data.items() %}
+	{%if item[0] == 0 %}
+		{% do item.pop(0) %}
+	{% endif %}
+	{% if item|length >= 2 %}
+	{% if item[-1] < item[-2] %}
+	{% if (1-(item[-1]/item[-2])) >= (0.3) and (1-(item[-1]/item[-2])) <= (0.39) %}
+	{% if key in products %}
+	<div class="grid-element"><a href="{{products[key][5]}}" style="text-decoration: none;"><img src="{{products[key][6]}}" style="float:right"><h1 style="color: #fff; font-size: 22px">{{products[key][0]}}: <span style="font-size: 18px"><br>{{products[key][1]}}:</span><span style="font-size: 14px"> {{products[key][3]}}</span><br><span style="font-size: 18px">Was:</span><span style="font-size: 14px"> {{item[-2]}}</span><span style="font-size: 18px">   Now:</span><span style="font-size: 14px"> {{item[-1]}}</span></h1></img></a></div>
+	{% endif %}
+	{% endif %}
+	{% endif %}
+	{% endif %}
+{% endfor %}
+</div>
+
+<h1>Other Possible Sales</h1>
+<div class="grid-container">
+{% for key, item in price_data.items() %}
+	{%if item[0] == 0 %}
+		{% do item.pop(0) %}
+	{% endif %}
+	{% if item|length >= 3 %}
+	{% if item[-1] < item[-3] %}
+	{% if (1-(item[-1]/item[-3])) >= (0.25) %}
+	{% if key in products %}
+	<div class="grid-element"><a href="{{products[key][5]}}" style="text-decoration: none;"><img src="{{products[key][6]}}" style="float:right"><h1 style="color: #fff; font-size: 22px">{{products[key][0]}}: <span style="font-size: 18px"><br>{{products[key][1]}}:</span><span style="font-size: 14px"> {{products[key][3]}}</span><br><span style="font-size: 18px">Was:</span><span style="font-size: 14px"> {{item[-2]}}</span><span style="font-size: 18px">   Now:</span><span style="font-size: 14px"> {{item[-1]}}</span></h1></img></a></div>
+	{% endif %}
+	{% endif %}
+	{% endif %}
+	{% endif %}
+{% endfor %}
+</div>
+
+
+{% endblock content%}

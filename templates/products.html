@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+ }
+.grid-element {
+  padding: 20px;
+  color: #fff;
+  border: 1px solid #fff;
+  background-color: rgb(60,66,69);
+}
+a{
+ text-decoration: none;
+ font-family: 'Roboto Condensed';
+ color: white;
+}
+.agrid{
+ font-size: 30px !important;
+}
+.imggrid{
+ width: 10% !important;
+}
+</style>
+
+<h1>{{product_name}}</h1>
+
+<div class="grid-container">
+{% set test = [] %}
+{% for key, value in products.items() %}
+	{% if value[0] == product_name %}
+	{% if value[5] not in test|unique %}
+	{% do test.append(value[5]) %}
+	
+    <div class="grid-element">
+
+    	<a class=agrid href= "{{ url_for('product_detailed', product_name=value[0], deat=value[1], end_url=value[7]|replace('/','-'))}}";>
+    		<img class=imggrid src="{{value[6]}}" alt="value[1]" style="float: right;">{{ value[1] }}:
+    		<span style="font-size: 20px"><br><br> Brand: {{value[0]}} <br> Type: {{value[2]}}</span>
+    	</img>	
+    	</a>
+ 
+    </div>
+    
+	{% endif %}
+	{% endif %}
+{% endfor %}
+</div>
+
+{% endblock content%}

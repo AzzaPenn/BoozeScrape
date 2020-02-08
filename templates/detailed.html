@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+{% block content %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<style>
+#chart{
+	min-width: 620px;
+	max-width: 1200px;
+	height: 600px;
+	margin: 0 auto;
+	margin-left: 100px
+
+}
+.grid-col {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 15px;
+    background-color: rgb(224,224,224)
+ }
+.grid-row {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    column-gap: 15px;
+    background-color: rgb(224,224,224)
+ }
+.grid-element {
+  padding: 20px;
+  color: #fff;
+  border: 1px solid #fff;
+  background-color: rgb(60,66,69);
+ 
+}
+.dtext{
+	color: #fff;
+	font-family: 'Roboto Condensed';
+	font-size: 25px
+}
+</style>
+{% set uurl = [] %}
+{% set largeimg = [] %}
+{% for key, value in products.items() %}
+	{% if value[0] == product_name %}
+	{% if value[1] == deat %}
+	{% if value[7] == end_url|replace('-','/') %}
+	{% do uurl.append(value[5]) %}
+	{% do largeimg.append(value[9])%}
+	{% endif %}
+	{% endif %}
+	{% endif %}
+{% endfor %}
+<h1>{{product_name}}: {{deat}}</h1>
+<h1><a href='{{uurl[0]}}'> Go to Site</a></h1>
+
+
+
+</div>
+<div class = "grid-col">
+<div class="grid-element"><img src="{{largeimg[0]}}" alt="Image" style='width:225px; padding-left: 100px; height: auto'></img></div>
+<div class="grid-element"><div id="chart"></div></div>
+<div class="grid-element"><div class="grid-row">
+{% set chart_sku = [] %}
+{% set chart_data = [] %}
+{% set chart_brand = [] %}
+{% for key, value in products.items() %}
+	{% if value[0] == product_name %}
+	{% if value[1] == deat %}
+	{% if value[7] == end_url|replace('-','/') %}
+	{% do chart_sku.append(key) %}
+	{% do chart_data.append(price_data[key])%}
+	{% do chart_brand.append(value[0] + ' - ' + value[1]) %}
+	
+	<div class="grid-element" style="border: none">
+	<h1 class = "dtext"> {{value[8]}}: </h1>
+	{% if price_data[key]|length > 1%}
+		{% if price_data[key][0] == 0 %}
+			{% do price_data[key].pop(0) %}
+		<h1 class = "dtext">Lowest Recorded Price: {{price_data[key]|min}}</h1>
+		{%else%}
+		<h1 class = "dtext">Lowest Recorded Price: {{price_data[key]|min}}</h1>
+		{%endif%}
+		{%else%}
+		<h1 class = "dtext">Lowest Recorded Price: {{price_data[key]|min}}</h1>
+		{%endif%}
+	<h1 class = "dtext">Current Price: {{price_data[key][-1]}}</h1>
+
+</div>
+{%endif%}
+	{%endif%}
+	{%endif%}
+	{%endfor%}</div>
+</div>
+  
+
+<script type="text/javascript">
+Highcharts.chart('chart', {
+    title: {
+        text: '{{chart_brand[1]}}'
+    },
+    subtitle: {
+        text: 'BoozeScrape'
+    },
+    yAxis: {
+        title: {
+            text: 'Price'
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+
+            },
+            pointStart: 0
+        }
+    },
+    series: [{
+        name: '{{chart_sku[0]}}',
+        data: {%if chart_data[0][0] == 0 %}{{chart_data[0][1:]}} {%else%} {{chart_data[0]}} {%endif%}
+    }, {
+        name: '{{chart_sku[1]}}',
+        data: {% if chart_data|length >= 2 %} {%if chart_data[1][0] == 0 %} {{chart_data[1][1:]}} {%else%} {{chart_data[1]}} {%endif%} {%else%} [] {%endif%}
+    }, {
+        name: '{{chart_sku[2]}}',
+        data: {% if chart_data|length == 3 %} {%if chart_data[2][0] == 0 %} {{chart_data[2][1:]}} {%else%} {{chart_data[2]}} {%endif%} {%else%} [] {%endif%}
+    }],
+    responsive: {
+        rules: [{
+              chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+});
+</script>
+
+{% endblock content%}
