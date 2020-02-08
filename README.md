@@ -7,3 +7,9 @@ Used to allow the scraping of price data of boozebud.com, displaying price diffe
 # For when it did work
 ## Home Page
 ![Home Page](/screens/home.png)
+
+## Search
+![Search](/screens/search.png)
+
+## Product Page
+![Product Page](/screens/product.png)
